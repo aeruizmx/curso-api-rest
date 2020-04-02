@@ -30,3 +30,6 @@ curl -X 'DELETE' http://localhost:8000/books/1
 
 AUTENTICANCION HTTP
 curl http://andres:1234@localhost:8000/books
+
+AUTENTICACION HMAC
+curl http://localhost:8000/books -H 'X-HASH : a8f0ea23877e6d4ba658d4871910063efceb2b34' -H 'X-UID: 1' -H 'X-TIMESTAMP: 1585851283'

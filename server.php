@@ -1,12 +1,35 @@
 <?php
+if(
+  !array_key_exists('HTTP_X_HASH_', $_SERVER) ||
+  !array_key_exists('HTTP_X_TIMESTAMP', $_SERVER) ||
+  !array_key_exists('HTTP_X_UID', $_SERVER)
+){
+  echo 'ACCESO PROHIBIDO';
+  die;
+}
+list($hash, $uid, $timestamp) = [
+  $_SERVER['HTTP_X_HASH_'],
+  $_SERVER['HTTP_X_UID'],
+  $_SERVER['HTTP_X_TIMESTAMP'],
+];
 
+$secret = 'Sh!! No se lo cuentes a nadie';
+
+$newHash = sha1($uid.$timestamp.$secret);
+if($newHash !== $hash){
+  echo 'ACCESO PROHIBIDO';
+  die;
+}
+/* 
 $user = array_key_exists('PHP_AUTH_USER', $_SERVER)? $_SERVER['PHP_AUTH_USER'] : '';
 $password = array_key_exists('PHP_AUTH_PW', $_SERVER)? $_SERVER['PHP_AUTH_PW'] : '';
 
 if($user !== 'andres' || $password !== '1234'){
   echo 'ACCESO PROHIBIDO';
   die;
-}
+} 
+*/
+
 //Definimos los recursos disponibles
 $allowedResorcesTypes = [
   'books',
