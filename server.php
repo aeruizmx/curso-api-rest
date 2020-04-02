@@ -82,5 +82,14 @@ switch ( strtoupper($_SERVER['REQUEST_METHOD']) ){
     } 
   break;
   case 'DELETE':
+      //Eliminar valores con DELETE
+      //curl -X 'DELETE' http://localhost:8000/books/1 
+      //Validamos que el recurso exista
+      if(!empty($resourceId)&& array_key_exists($resourceId, $books)){
+        //Eliminamos el recurso
+        unset($books[$resourceId]);
+      }
+      //Retornamos la coleccion modificada en json
+      echo json_encode($books);
   break;
 }
