@@ -1,5 +1,5 @@
 <?php
-if( !array_key_exists('HTTP_X_TOKEN',$_SERVER)){
+/* if( !array_key_exists('HTTP_X_TOKEN',$_SERVER)){
 	echo 'ACCESO PROHIBIDO';
   die;
 }
@@ -15,7 +15,7 @@ echo $ret;
 if( $ret !== 'true' ){
 	echo 'usuario no fue correctamente autenticado';
 	die;
-}
+} */
 /* if(
   !array_key_exists('HTTP_X_HASH_', $_SERVER) ||
   !array_key_exists('HTTP_X_TIMESTAMP', $_SERVER) ||
@@ -58,6 +58,7 @@ $allowedResorcesTypes = [
 $resourceType = $_GET['resource_type'];
 
 if(!in_array($resourceType, $allowedResorcesTypes)){
+  http_response_code(400);
   die;
 }
 
@@ -94,6 +95,8 @@ switch ( strtoupper($_SERVER['REQUEST_METHOD']) ){
     }else {
       if( array_key_exists($resourceId, $books)){
         echo json_encode($books[ $resourceId ]);
+      } else{
+        http_response_code(404);
       }
     }
   break;
