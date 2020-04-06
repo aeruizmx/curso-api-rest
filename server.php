@@ -1,5 +1,22 @@
 <?php
-if(
+if( !array_key_exists('HTTP_X_TOKEN',$_SERVER)){
+	echo 'ACCESO PROHIBIDO';
+  die;
+}
+$url = 'http://localhost:8001';
+
+$ch = curl_init($url);
+
+curl_setopt( $ch, CURLOPT_HTTPHEADER, [ "X-Token: {$_SERVER['HTTP_X_TOKEN']}"]);
+curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true);
+
+$ret = curl_exec($ch);
+echo $ret;
+if( $ret !== 'true' ){
+	echo 'usuario no fue correctamente autenticado';
+	die;
+}
+/* if(
   !array_key_exists('HTTP_X_HASH_', $_SERVER) ||
   !array_key_exists('HTTP_X_TIMESTAMP', $_SERVER) ||
   !array_key_exists('HTTP_X_UID', $_SERVER)
@@ -19,7 +36,7 @@ $newHash = sha1($uid.$timestamp.$secret);
 if($newHash !== $hash){
   echo 'ACCESO PROHIBIDO';
   die;
-}
+} */
 /* 
 $user = array_key_exists('PHP_AUTH_USER', $_SERVER)? $_SERVER['PHP_AUTH_USER'] : '';
 $password = array_key_exists('PHP_AUTH_PW', $_SERVER)? $_SERVER['PHP_AUTH_PW'] : '';
