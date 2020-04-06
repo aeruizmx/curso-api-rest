@@ -43,3 +43,13 @@ curl http://localhost:8001 -X 'POST' -H 'X-Client-Id: 1' -H 'X-Secret:SuperSecre
 
 Autenticarse
 curl http://localhost:8000/books -H 'X-Token:c4b02a1525349e7888d4140dcd524aff2d6296dd'
+
+MANEJO DE ERRORES
+200
+php client.php http://localhost:8000/books
+
+400
+php client.php http://localhost:8000/boos
+
+404
+php client.php http://localhost:8000/books/10
